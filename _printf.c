@@ -26,6 +26,8 @@ int _printf(const char *format, ...)
 				else if (format[i + 1] == 's')
 				{
 					s = va_arg(list, char *);
+					if (s == NULL)
+						s = "(null)";
 					j = 0;
 					while (s[j] != '\0')
 					{
