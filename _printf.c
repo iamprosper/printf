@@ -10,34 +10,37 @@ int _printf(const char *format, ...)
 	va_list list;
 	char *s;
 
-	va_start(list, format);
-
-	for (i = 0; format[i] != '\0'; i++)
+	if (format != NULL)
 	{
-		if (format[i]  == '%')
+		va_start(list, format);
+
+		for (i = 0; format[i] != '\0'; i++)
 		{
-			if (format[i + 1] == 'c')
+			if (format[i]  == '%')
 			{
-				n += _putchar(va_arg(list, int));
-				i++;
-			}
-			else if (format[i + 1] == 's')
-			{
-				s = va_arg(list, char *);
-				j = 0;
-				while (s[j] != '\0')
+				if (format[i + 1] == 'c')
 				{
-					n += _putchar(s[j]);
-					j++;
+					n += _putchar(va_arg(list, int));
+					i++;
 				}
-				i++;
+				else if (format[i + 1] == 's')
+				{
+					s = va_arg(list, char *);
+					j = 0;
+					while (s[j] != '\0')
+					{
+						n += _putchar(s[j]);
+						j++;
+					}
+					i++;
+				}
+				else if (format[i + 1]  == '%')
+					n += _putchar(37);
 			}
-			else if (format[i + 1]  == '%')
-				n += _putchar(37);
+			else
+				n += _putchar(format[i]);
 		}
-		else
-			n += _putchar(format[i]);
+		va_end(list);
 	}
-	va_end(list);
 	return (n);
 }
