@@ -7,4 +7,5 @@ int _printf(const char *format, ...);
 int _putchar(char c);
 void check_format_specifier(va_list list, char c,
 		int *n, char *s, int *i, int j, bool *single);
+void check_non_format_specifier(char c, bool *single, int *n, int *i);
 #endif

@@ -81,11 +81,35 @@ void check_format_specifier(va_list list, char c,
 			++*n;
 	}
 	else
+		check_non_format_specifier(c, &find, &n, &i);
+}
+/**
+ * check_non_format_specifier - Check a non format specifier
+ * @c: The next char following %
+ * @find: A bool to check wheteher % is alone
+ * @n: The number of character of the format string
+ * @i: The loop counter
+ */
+void check_non_format_specifier(char c, bool **find, int **n, int **i)
+{
+	if (c != 32 && c != '\0')
 	{
-		if (*find == false)
+		_putchar(37);
+		_putchar(c);
+		++**i;
+		if (**find == false)
 		{
-			*find = true;
-			*n = -1;
+			++**n;
+			++**n;
 		}
 	}
+	else
+	{
+		if (**find == false)
+		{
+			**find = true;
+			**n = -1;
+		}
+	}
+
 }
