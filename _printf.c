@@ -49,6 +49,8 @@ void check_format_specifier(va_list list, char c,
 	else if (c == 's')
 	{
 		s = va_arg(list, char *);
+		if (s == NULL)
+			s = "(null)";
 		if (s != NULL)
 		{
 			j = 0;
