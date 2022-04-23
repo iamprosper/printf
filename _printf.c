@@ -18,7 +18,7 @@ int _printf(const char *format, ...)
 		{
 			if (format[i]  == '%')
 			{
-				check_format_specifier(list, format[i + 1], n, s, &i, j);
+				check_format_specifier(list, format[i + 1], &n, s, &i, j);
 			}
 			else
 				n += _putchar(format[i]);
@@ -38,12 +38,13 @@ int _printf(const char *format, ...)
  * @j: The counter of the string loop
  */
 void check_format_specifier(va_list list, char c,
-		int n, char *s, int *i, int j)
+		int *n, char *s, int *i, int j)
 {
 	if (c == 'c')
 	{
-		n += _putchar(va_arg(list, int));
+		_putchar(va_arg(list, int));
 		++*i;
+		++*n;
 	}
 	else if (c == 's')
 	{
@@ -53,8 +54,9 @@ void check_format_specifier(va_list list, char c,
 			j = 0;
 			while (s[j] != '\0')
 			{
-				n += _putchar(s[j]);
+				_putchar(s[j]);
 				j++;
+				++*n;
 			}
 		}
 		++*i;
@@ -62,9 +64,10 @@ void check_format_specifier(va_list list, char c,
 	else if (c  == '%' || c == '\0'
 			|| c == '\n')
 	{
-		n += _putchar(37);
+		_putchar(37);
 		if (c == '\n')
 			_putchar('\n');
 		++*i;
+		++*n;
 	}
 }
