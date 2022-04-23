@@ -9,6 +9,7 @@ int _printf(const char *format, ...)
 	int i = 0, j = 0, n = 0;
 	va_list list;
 	char *s = NULL;
+	bool single = false;
 
 	if (format != NULL)
 	{
@@ -18,13 +19,19 @@ int _printf(const char *format, ...)
 		{
 			if (format[i]  == '%')
 			{
-				check_format_specifier(list, format[i + 1], &n, s, &i, j);
+				check_format_specifier(list, format[i + 1],
+						&n, s, &i, j, &single);
 			}
 			else
-				n += _putchar(format[i]);
+			{
+				if (single == false)
+					n += _putchar(format[i]);
+			}
 		}
 		va_end(list);
 	}
+	else
+		n = -1;
 	return (n);
 }
 
@@ -36,14 +43,16 @@ int _printf(const char *format, ...)
  * @s: A pointer to a string to print
  * @i: The counter of the loop
  * @j: The counter of the string loop
+ * @find: A boolean checking whether % is find alone
  */
 void check_format_specifier(va_list list, char c,
-		int *n, char *s, int *i, int j)
+		int *n, char *s, int *i, int j, bool *find)
 {
 	if (c == 'c')
 	{
 		_putchar(va_arg(list, int));
 		++*i;
+		if (*find == false)
 		++*n;
 	}
 	else if (c == 's')
@@ -58,7 +67,8 @@ void check_format_specifier(va_list list, char c,
 			{
 				_putchar(s[j]);
 				j++;
-				++*n;
+				if (*find == false)
+					++*n;
 			}
 		}
 		++*i;
@@ -67,6 +77,15 @@ void check_format_specifier(va_list list, char c,
 	{
 		_putchar(37);
 		++*i;
-		++*n;
+		if (*find == false)
+			++*n;
+	}
+	else
+	{
+		if (*find == false)
+		{
+			*find = true;
+			*n = -1;
+		}
 	}
 }
