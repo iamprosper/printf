@@ -63,8 +63,7 @@ void check_format_specifier(va_list list, char c,
 		}
 		++*i;
 	}
-	else if (c  == '%' || c == '\0'
-			|| c == '\n')
+	else if (c  == '%')
 	{
 		_putchar(37);
 		++*i;
