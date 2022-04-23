@@ -65,8 +65,6 @@ void check_format_specifier(va_list list, char c,
 			|| c == '\n')
 	{
 		_putchar(37);
-		if (c == '\n')
-			_putchar('\n');
 		++*i;
 		++*n;
 	}
